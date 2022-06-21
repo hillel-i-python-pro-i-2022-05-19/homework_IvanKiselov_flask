@@ -1,6 +1,4 @@
-# from __future__ import annotations
 from typing import Optional
-
 from settings import ROOT_PATH, DB_PATH
 from flask import Flask, request, render_template, redirect, url_for
 import sqlite3
@@ -26,8 +24,7 @@ class Connection:
         self._connection.close()
 
 
-
-@app.route('/phones/create/', methods=['GET','POST'])
+@app.route('/phones/create/', methods=['GET', 'POST'])
 def create():
     with Connection() as con:
         cur = con.cursor()
@@ -56,11 +53,10 @@ def read():
         rows = cur.fetchall()
         phones_str = []
         for row in rows:
-            phones_str.append({'name':row[1],'phone':row[2]})
+            phones_str.append({'name': row[1], 'phone': row[2]})
             # phones_str.append(row[2])
 
     return render_template('read.html', context=phones_str)
-
 
 
 @app.route('/phones/update/', methods=['POST', 'GET'])
@@ -82,7 +78,7 @@ def update():
     return render_template('update.html')
 
 
-@app.route('/phones/update/<oldname>', methods=['GET','POST'])
+@app.route('/phones/update/<oldname>', methods=['GET', 'POST'])
 def update_helper(oldname):
     with Connection() as con:
         cur = con.cursor()
@@ -97,7 +93,7 @@ def update_helper(oldname):
     return render_template('update_helper.html')
 
 
-@app.route('/phones/delete', methods=['GET','POST', 'PUT'])
+@app.route('/phones/delete', methods=['GET', 'POST', 'PUT'])
 def delete():
     with Connection() as con:
         cur = con.cursor()
@@ -112,6 +108,7 @@ def delete():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
 
 
 
